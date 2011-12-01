@@ -1,0 +1,48 @@
+#!/usr/bin/env ruby
+require "optparse"
+
+require "pp"
+$:.push File.expand_path("../../lib", __FILE__)
+require "youdao_fanyi"
+
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: youdao_fanyi [--key API_Key] [--keyfrom API_KeyFrom] STRING [STRING, ...]"
+
+  opts.on('--key API_Key', "A 'http://fanyi.youdao.com/fanyiapi?path=data-mode' API key") do |key|
+    options[:key] = key
+  end
+
+  opts.on('--keyfrom API_KeyFrom', "A 'http://fanyi.youdao.com/fanyiapi?path=data-mode' API keyfrom") do |keyfrom|
+    options[:keyfrom] = keyfrom
+  end
+
+  opts.on("-v", "--version", "The current version of YoudaoFanyi") do
+    puts "YoudaoFanyi v#{YoudaoFanyi::VERSION}"
+    exit
+  end
+
+  opts.on("-h", "--help", "This help screen") do
+    puts opts
+    exit
+  end
+
+end.parse!
+
+STDERR.puts "fanyi.youdao.com API key is required" unless options[:key]
+STDERR.puts "fanyi.youdao.com API keyfrom is required" unless options[:keyfrom]
+STDERR.puts "At least one string to translate is required" unless ARGV.size >= 1
+
+YoudaoFanyi.configure do |config|
+  config.api_keys = [
+    { "keyfrom" => options[:keyfrom], "key" => options[:key] }
+  ]
+end
+
+YoudaoFanyi::Translator.translate(*ARGV) do |results|
+#  puts results.translation
+  puts "======================================="
+  pp results.results
+  puts "======================================="
+end
+

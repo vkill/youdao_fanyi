@@ -15,3 +15,11 @@ spec/reports
 test/tmp
 test/version_tmp
 tmp
+
+spec/rails3_0_app/db/*.sqlite3
+spec/rails3_0_app/log/*
+spec/rails3_0_app/tmp/*
+
+
+spec/support/youdao_fanyi_api_keys.yml
+spec/rails3_0_app/config/youdao_fanyi_api_keys.yml

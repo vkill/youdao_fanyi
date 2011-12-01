@@ -20,7 +20,13 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "rspec"
   gem.add_development_dependency "guard-rspec"
   gem.add_development_dependency "pry"
+  gem.add_development_dependency "rspec-rails"
+
+  #use in spec/rails3_0_app
+  gem.add_development_dependency "rails", "~> 3.0"
+  gem.add_development_dependency "sqlite3-ruby"
 
   gem.add_dependency "httparty", "~> 0.8.1"
+  gem.add_dependency "activesupport", "~> 3.0"
 end
 
