@@ -65,7 +65,7 @@ basic example in the rails console, more see `examples/translate.rb`.
     > YoudaoFanyi.t(:i, :china)   => ["我", "中国"]
 
 
-When your want translate models attributes, please use https://github.com/vkill/i18n_attributes, it auto use this gem. (WARN: this function wait support!!!)
+When your want translate models attributes, please see https://github.com/vkill/i18n_attributes .
 
 
 ##Use in shell
