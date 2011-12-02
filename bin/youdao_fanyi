@@ -1,10 +1,5 @@
 #!/usr/bin/env ruby
 require "optparse"
-
-require "pp"
-$:.push File.expand_path("../../lib", __FILE__)
-require "youdao_fanyi"
-
 options = {}
 OptionParser.new do |opts|
   opts.banner = "Usage: youdao_fanyi [--key API_Key] [--keyfrom API_KeyFrom] STRING [STRING, ...]"
@@ -33,6 +28,10 @@ STDERR.puts "fanyi.youdao.com API key is required" unless options[:key]
 STDERR.puts "fanyi.youdao.com API keyfrom is required" unless options[:keyfrom]
 STDERR.puts "At least one string to translate is required" unless ARGV.size >= 1
 
+require "pp"
+$:.push File.expand_path("../../lib", __FILE__)
+require "youdao_fanyi"
+
 YoudaoFanyi.configure do |config|
   config.api_keys = [
     { "keyfrom" => options[:keyfrom], "key" => options[:key] }
@@ -41,7 +40,6 @@ end
 
 YoudaoFanyi::Translator.translate(*ARGV) do |results|
 #  puts results.translation
-  puts "======================================="
   pp results.results
   puts "======================================="
 end

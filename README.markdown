@@ -25,7 +25,7 @@ more see `examples/translate.rb`.
       ]
     end
 
-    puts YoudaoFanyi.t("china")
+    puts YoudaoFanyi.t("i love you")
 
     YoudaoFanyi::Translator.translate("china", :i, nil, true, false, "") do |results|
       p [results.error_code, results.translation, results.query]
@@ -70,8 +70,9 @@ When your want translate models attributes, please use https://github.com/vkill/
 
 ##Use in shell
 
-    > # youdao_fanyi --key 2022446265 --keyfrom blog-vkill-net "详细" i you
+    > youdao_fanyi --key 2022446265 --keyfrom blog-vkill-net 中国 "i love you"
 
+If you want use proxy, please set `HTTP_PROXY`, link this `export HTTP_PROXY=http://localhost:8118`.
 
 ##Copyright
 

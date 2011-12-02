@@ -10,7 +10,7 @@ YoudaoFanyi.configure do |config|
   ]
 end
 
-puts YoudaoFanyi.t("china")
+puts YoudaoFanyi.t("i love you")
 puts "======================================="
 
 YoudaoFanyi::Translator.translate("中国", "china", :i, nil, true, false, "") do |results|
@@ -24,7 +24,7 @@ end
 =begin
 
 [root@vkill-arch youdao_fanyi]# ruby examples/translate.rb
-中国
+我爱你
 =======================================
 [0, "China", "中国"]
 {"translation"=>["China"],
