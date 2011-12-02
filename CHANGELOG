@@ -1,3 +1,7 @@
+== 0.1.2.2
+
+* modify, when query "created_at", actual query "created at"
+
 == 0.1.2
 
 * modify bin display

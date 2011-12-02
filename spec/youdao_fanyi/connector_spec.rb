@@ -81,6 +81,8 @@ describe YoudaoFanyi::Connector do
     connector = YoudaoFanyi::Connector.new.request("中国")
 #    connector.q.should == "%E4%B8%AD%E5%9B%BD" #CGI::escape
     connector.q.should == "中国"
+    connector = YoudaoFanyi::Connector.new.request(:created_at)
+    connector.q.should == "created at"
   end
 end
 

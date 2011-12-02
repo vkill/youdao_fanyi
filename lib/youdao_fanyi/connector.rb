@@ -27,10 +27,8 @@ module YoudaoFanyi
 
     def request(word, *options)
       options = options.extract_options!
-      @q = word.to_s
-      @response = self.class.get('', :query => {:q => word}.merge(:key => @key, :keyfrom => @keyfrom))
-#      require "pry"
-#      binding.pry
+      @q = word.to_s.gsub("_"," ")
+      @response = self.class.get('', :query => {:q => @q}.merge(:key => @key, :keyfrom => @keyfrom))
       @results = JSON.load(@response.body)
       @error_code, @query = @results['errorCode'], @results['query']
       @translation = @error_code == 0 ? @results['translation'].first : YoudaoFanyi::Errors.error_message(@error_code)
