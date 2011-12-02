@@ -22,6 +22,10 @@ OptionParser.new do |opts|
     exit
   end
 
+  opts.on("-m", "--more", "Display all results.") do
+    options[:more] = true
+  end
+
 end.parse!
 
 STDERR.puts "fanyi.youdao.com API key is required" unless options[:key]
@@ -31,7 +35,6 @@ STDERR.puts "At least one string to translate is required" unless ARGV.size >= 1
 
 $:.push File.expand_path("../../lib", __FILE__)
 require "youdao_fanyi"
-require "vkill_gems_methods/std"
 
 YoudaoFanyi.configure do |config|
   config.api_keys = [
@@ -41,28 +44,34 @@ end
 
 YoudaoFanyi::Translator.translate(*ARGV) do |connector|
   STDOUT.puts "======================================="
-  if connector.error_code == 0
-    STDOUT.puts VkillGemsMethods::STD::Display.new(
-      :header => :translation, :text => connector.translation,
-      :color => :green, :rjust_integer => 12
-                ).output
-    STDOUT.puts VkillGemsMethods::STD::Display.new(
-      :header => :phonetic, :text => (connector.results['basic']['phonetic'] rescue ""),
-      :color => :green, :rjust_integer => 12
-                ).output
-    STDOUT.puts VkillGemsMethods::STD::Display.new(
-      :header => :explains, :text => (connector.results['basic']['explains'] rescue ""),
-      :color => :green, :rjust_integer => 12
-                ).output
+  if options[:more]
+    require "pp"
+    pp connector.results
   else
-    STDOUT.puts VkillGemsMethods::STD::Display.new(
-      :header => :error_code, :text => connector.error_code,
-      :color => :red, :rjust_integer => 12
-                ).output
-    STDOUT.puts VkillGemsMethods::STD::Display.new(
-      :header => :query, :text => connector.query,
-      :color => :green, :rjust_integer => 12
-                ).output
+    require "vkill_gems_methods/std"
+    if connector.error_code == 0
+      STDOUT.puts VkillGemsMethods::STD::Display.new(
+        :header => :translation, :text => connector.translation,
+        :color => :green, :rjust_integer => 12
+                  ).output
+      STDOUT.puts VkillGemsMethods::STD::Display.new(
+        :header => :phonetic, :text => (connector.results['basic']['phonetic'] rescue ""),
+        :color => :green, :rjust_integer => 12
+                  ).output
+      STDOUT.puts VkillGemsMethods::STD::Display.new(
+        :header => :explains, :text => (connector.results['basic']['explains'] rescue ""),
+        :color => :green, :rjust_integer => 12
+                  ).output
+    else
+      STDOUT.puts VkillGemsMethods::STD::Display.new(
+        :header => :error_code, :text => connector.error_code,
+        :color => :red, :rjust_integer => 12
+                  ).output
+      STDOUT.puts VkillGemsMethods::STD::Display.new(
+        :header => :query, :text => connector.query,
+        :color => :green, :rjust_integer => 12
+                  ).output
+    end
   end
   STDOUT.puts "======================================="
 end
